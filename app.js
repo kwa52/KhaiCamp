@@ -13,11 +13,14 @@ app.get("/", function(req, res) {
 });
 
 app.get("/campgrounds", function(req, res) {
-  var campgrouds = [
-    {name: "Salmon Creek", image: ""}
-    {name: "Granite Hill", image: ""}
-    {name: "Mountain Goat", image: ""}
+  var campgrounds = [
+    {name: "Salmon Creek", image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"},
+    {name: "Granite Hill", image: "https://images.pexels.com/photos/803226/pexels-photo-803226.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"},
+    {name: "Mountain Goat", image: "https://images.pexels.com/photos/1061640/pexels-photo-1061640.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"}
   ]
+
+  // name : data to pass in
+  res.render("campgrounds", {campgrounds, campgrounds});
 });
 
 app.listen(port, hostname, () => {
