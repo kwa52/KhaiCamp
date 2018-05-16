@@ -1,0 +1,14 @@
+<% include partials/header %>
+
+<h1>Create New Campground </h1>
+
+<form class="" action="/campgrounds" method="post">
+  <!-- "name" attribute used for getting data in routes -->
+  <input type="text" placeholder="name" name="name" value="">
+  <input type="text" placeholder="image url" name="image" value="">
+  <button>Submit</button>
+</form>
+
+<a href="/campgrounds">Go Back</a>
+
+<% include partials/footer %>
