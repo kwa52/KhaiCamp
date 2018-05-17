@@ -1,14 +1,38 @@
 <% include partials/header %>
 
-<h1>Create New Campground </h1>
+<div class="container">
 
-<form class="" action="/campgrounds" method="post">
-  <!-- "name" attribute used for getting data in routes -->
-  <input type="text" placeholder="name" name="name" value="">
-  <input type="text" placeholder="image url" name="image" value="">
-  <button>Submit</button>
-</form>
+  <div class="row justify-content-center">
+    <div class="col-md-12 text-center">
+      <h1>Create New Campground </h1>
+    </div>
 
-<a href="/campgrounds">Go Back</a>
+    <div class="col-4 col-xs-12 col-md-6">
+      <form class="" action="/campgrounds" method="post">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <!-- "name" attribute used for getting data in routes -->
+            <input class="form-control" type="text" placeholder="name" name="name" value="">
+        </div>
+        <div class="form-group">
+          <label for="image">Image URL</label>
+            <input class="form-control" type="text" placeholder="image url" name="image" value="">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary">Submit</button>
+        </div>
+
+      </form>
+      <a href="/campgrounds">Go Back</a>
+    </div>
+
+
+
+
+  </div>
+
+
+
+</div>
 
 <% include partials/footer %>
