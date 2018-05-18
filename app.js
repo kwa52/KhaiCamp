@@ -88,11 +88,12 @@ app.get("/campgrounds/new", function(req, res) {
 // SHOW Route - shows more info about one campground
 app.get("/campgrounds/:id", function(req, res) {
   // Get id from the request
-  Campground.findById(req.params.id, function(err, foundCampground) {
+  Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground) {
     if (err) {
       console.log(err);
     }
     else {
+      console.log(foundCampground);
       res.render("show", {campground: foundCampground});
     }
   });
