@@ -2,6 +2,7 @@ var express = require("express")
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var Campground = require("./models/campground");
 
 const http = require('http');
 const hostname = '127.0.0.1';
@@ -9,19 +10,11 @@ const port = 3000;
 
 mongoose.connect("mongodb://localhost/khai_camp");
 
-// Schema Setup
-var campgroundSchema = new mongoose.Schema({
-  name:String,
-  image:String
-});
-
-// Assign model to a variable and generate a collection and pluralize it with the name "campgrounds" in the database
-var Campground = mongoose.model("Campground", campgroundSchema);
-
 // Campground.create(
 //   {
 //     name: "Granite Hill",
-//     image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350"
+//     image: "https://images.pexels.com/photos/699558/pexels-photo-699558.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=350",
+//     description: "This is the new Granite Hill."
 //   },
 //   function(err, campground) {
 //     if (err) {
@@ -51,7 +44,9 @@ app.get("/", function(req, res) {
   res.render("landing");
 });
 
-// Display all campgrounds
+// REST: Representational State Transfer routes
+
+// INDEX route - Display all campgrounds
 app.get("/campgrounds", function(req, res) {
   // name to use in ejs file : data to pass in
   Campground.find({}, function(err, allCampgrounds) {
@@ -59,18 +54,19 @@ app.get("/campgrounds", function(req, res) {
       console.log(err);
     }
     else {
-      res.render("campgrounds", {campgrounds:allCampgrounds});
+      res.render("index", {campgrounds: allCampgrounds});
     }
   });
 });
 
-// page to create new campground
+// CREATE Route - page to create new campground
 app.post("/campgrounds", function(req, res) {
   //get the form data and add to campground array
   //redirect back too all campground page
   var name = req.body.name;
   var image = req.body.image;
-  var newCampground = {name: name, image:image};
+  var desc = req.body.description;
+  var newCampground = {name: name, image:image, description: desc};
   Campground.create(newCampground, function(err, newlyCreated) {
     if (err) {
       console.log(err);
@@ -81,9 +77,22 @@ app.post("/campgrounds", function(req, res) {
   })
 });
 
-//
+// NEW Route
 app.get("/campgrounds/new", function(req, res) {
   res.render("new");
+});
+
+// SHOW Route - shows more info about one campground
+app.get("/campgrounds/:id", function(req, res) {
+  // Get id from the request
+  Campground.findById(req.params.id, function(err, foundCampground) {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      res.render("show", {campground: foundCampground});
+    }
+  });
 });
 
 app.listen(port, hostname, () => {
