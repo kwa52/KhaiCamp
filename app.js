@@ -3,6 +3,9 @@ var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var Campground = require("./models/campground");
+var seedDB = require("./seeds");
+
+seedDB();
 
 const http = require('http');
 const hostname = '127.0.0.1';

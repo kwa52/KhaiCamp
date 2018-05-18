@@ -6,6 +6,12 @@ var campgroundSchema = new mongoose.Schema({
   name:String,
   image:String,
   description:String
+  comments: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "Comment"
+      }
+   ]
 });
 
 // Assign model to a variable and generate a collection and pluralize it with the name "campgrounds" in the database
