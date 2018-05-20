@@ -18,6 +18,8 @@ mongoose.connect("mongodb://localhost/khai_camp");
 // simplify with writing xxx instead of xxx.ejs
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+// __dirnmae refers to the script that is running
+app.use(express.static(__dirname + "/public"));
 
 app.get("/", function(req, res) {
   res.render("landing");

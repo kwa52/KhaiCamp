@@ -1,0 +1,11 @@
+body {
+  background-color: lightgrey;
+}
+
+.card img{
+  width: 100%;
+}
+
+.card .caption-full {
+  padding: 9px;
+}
