@@ -2,11 +2,28 @@ var express = require("express")
 var app = express();
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var passport = require("passport");
+var LocalStrategy = require("passport-local");
+
 var Campground = require("./models/campground");
 var Comment = require("./models/comment");
+var User = require("./models/user");
 var seedDB = require("./seeds");
 
 seedDB();
+
+// PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret: "Passport configuration secret message setup",
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+// User.authenticate() comes with passport local mongoose plugin
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 const http = require('http');
 const hostname = '127.0.0.1';
@@ -113,6 +130,45 @@ app.post("/campgrounds/:id/comments", function(req, res) {
       });
     }
   });
+});
+
+// ===========
+// AUTH ROUTES
+// ===========
+
+// Show sign up form
+app.get("/register", function(req, res) {
+  res.render("register");
+});
+
+// Handle sign up logic
+app.post("/register", function(req, res) {
+  // initialize a new user only with the username
+  var newUser = new User({username: req.body.username});
+  // adding a hashed password to newUser
+  User.register(newUser, req.body.password, function(err, user) {
+    if (err) {
+      console.log(err);
+      return res.render("register");
+    }
+    passport.authenticate("local")(req, res, function() {
+      res.redirect("/campgrounds");
+    });
+  });
+});
+
+// Show log in form
+app.get("/login", function(req, res) {
+  res.render("login");
+});
+
+// Log in logic
+app.post("/login", passport.authenticate("local",
+  // run middleware prior to logging in
+  {
+    successRedirect: "/campgrounds",
+    failureRedirect: "/login"
+  }), function(req, res) {
 });
 
 app.listen(port, hostname, () => {
