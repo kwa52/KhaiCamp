@@ -1,3 +1,4 @@
+
 var express = require("express")
 var app = express();
 var bodyParser = require("body-parser");
@@ -12,6 +13,10 @@ var seedDB = require("./seeds");
 
 seedDB();
 
+const http = require('http');
+const hostname = '127.0.0.1';
+const port = 3000;
+
 // PASSPORT CONFIGURATION
 app.use(require("express-session")({
   secret: "Passport configuration secret message setup",
@@ -25,9 +30,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-const http = require('http');
-const hostname = '127.0.0.1';
-const port = 3000;
+// pass req.user to every single template
+// whatever put inside res.locals is available to every template
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 mongoose.connect("mongodb://localhost/khai_camp");
 
@@ -100,7 +108,7 @@ app.get("/campgrounds/:id", function(req, res) {
 // COMMENTS ROUTES
 // ===============
 
-app.get("/campgrounds/:id/comments/new", function(req,res) {
+app.get("/campgrounds/:id/comments/new", isLoggedIn, function(req,res) {
   Campground.findById(req.params.id, function(err, campground) {
     if (err) {
       console.log(err);
@@ -111,7 +119,7 @@ app.get("/campgrounds/:id/comments/new", function(req,res) {
   });
 });
 
-app.post("/campgrounds/:id/comments", function(req, res) {
+app.post("/campgrounds/:id/comments", isLoggedIn, function(req, res) {
   Campground.findById(req.params.id, function(err, campground) {
     if (err) {
       console.log(err);
@@ -170,6 +178,19 @@ app.post("/login", passport.authenticate("local",
     failureRedirect: "/login"
   }), function(req, res) {
 });
+
+// Log out route
+app.get("/logout", function(req, res) {
+  req.logout();
+  res.redirect("/campgrounds");
+});
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+};
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
