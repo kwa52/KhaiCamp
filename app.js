@@ -9,6 +9,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
+var methodOverride = require("method-override");
 
 // Schemas
 var Campground = require("./models/campground");
@@ -51,6 +52,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended:true}));
 // __dirnmae refers to the script that is running
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 // ============================================
 // REST: Representational State Transfer routes
