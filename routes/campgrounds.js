@@ -92,7 +92,7 @@ function isLoggedIn(req, res, next) {
     return next();
   }
   res.redirect("/login");
-};
+}
 
 function checkCampgroundOwnership(req, res, next) {
   if (req.isAuthenticated()) {
