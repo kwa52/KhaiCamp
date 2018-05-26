@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var LocalStrategy = require("passport-local");
 var methodOverride = require("method-override");
+var flash = require("connect-flash");
 
 // Schemas
 var Campground = require("./models/campground");
@@ -37,10 +38,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(flash());
 // pass req.user to every single template
 // whatever put inside res.locals is available to every template
 app.use(function(req, res, next) {
   res.locals.currentUser = req.user;
+  res.locals.error = req.flash("error");
+  res.locals.success = req.flash("success");
   next();
 });
 
@@ -53,6 +57,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 // __dirnmae refers to the script that is running
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
+
 
 // ============================================
 // REST: Representational State Transfer routes
