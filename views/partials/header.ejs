@@ -13,9 +13,9 @@
 
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Home</a>
-          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/"></a>
+          </li> -->
         </ul>
         <ul class="navbar-nav">
           <% if (!currentUser) { %>
@@ -27,7 +27,7 @@
             </li>
           <% } else { %>
             <li class="nav-item">
-              <a href="#">Signed In As <%= currentUser.username %></a>
+              <a class="nav-link" href="">Signed in as <%= currentUser.username %></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/logout">Log Out</a>

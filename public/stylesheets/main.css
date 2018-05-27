@@ -2,6 +2,10 @@ body {
   background-color: lightgrey;
 }
 
+.jumbotron {
+  background: url("../images/cool-background.png");
+}
+
 .card img{
   width: 100%;
 }

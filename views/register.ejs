@@ -1,11 +1,30 @@
 <% include partials/header %>
 
-<h1>Sign Up</h1>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-12 text-center">
+      <h1>Sign Up</h1>
+    </div>
 
-<form class="" action="/register" method="post">
-  <input type="text" name="username" placeholder="username" value="">
-  <input type="text" name="password" placeholder="password" value="">
-  <button>Sign Up</button>
-</form>
+    <div class="col-4 col-xs-12 col-md-6">
+      <form class="" action="/register" method="post">
+        <div class="form-group">
+            <label for="name">Username</label>
+            <!-- "name" attribute used for getting data in routes -->
+            <input class="form-control" type="text" placeholder="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="name">Password</label>
+            <!-- "name" attribute used for getting data in routes -->
+            <input class="form-control" type="text" placeholder="password" name="password">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-lg btn-primary">Sign Up</button>
+        </div>
+      </form>
+      <a href="/campgrounds">Go Back</a>
+    </div>
+  </div>
+</div>
 
 <% include partials/footer %>
