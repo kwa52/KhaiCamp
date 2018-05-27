@@ -48,7 +48,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-mongoose.connect("mongodb://localhost/khai_camp");
+// mongoose.connect("mongodb://localhost/khai_camp");
+mongoose.connect("mongodb://kwa52:qazwsx123@ds137740.mlab.com:37740/khaicamp");
 
 
 // simplify with writing xxx instead of xxx.ejs
