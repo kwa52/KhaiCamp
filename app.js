@@ -48,8 +48,8 @@ app.use(function(req, res, next) {
   next();
 });
 
-// mongoose.connect("mongodb://localhost/khai_camp");
-mongoose.connect("mongodb://kwa52:qazwsx123@ds137740.mlab.com:37740/khaicamp");
+mongoose.connect("mongodb://localhost/khai_camp");
+// mongoose.connect("mongodb://kwa52:qazwsx123@ds137740.mlab.com:37740/khaicamp");
 
 
 // simplify with writing xxx instead of xxx.ejs
@@ -68,7 +68,7 @@ app.use(indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, process.env.IP);
+app.listen(process.env.PORT || 3000, process.env.IP);
 
 // app.listen(port, hostname, () => {
 //   console.log(`Server running at http://${hostname}:${port}/`);
