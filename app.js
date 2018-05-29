@@ -48,8 +48,9 @@ app.use(function(req, res, next) {
   next();
 });
 
+const dbUrl = process.env.KHAI_CAMP_MONGOLAB_URL;
 // mongoose.connect("mongodb://localhost/khai_camp");
-mongoose.connect("mongodb://kwa52:qazwsx123@ds137740.mlab.com:37740/khaicamp");
+mongoose.connect(dbUrl);
 
 
 // simplify with writing xxx instead of xxx.ejs
